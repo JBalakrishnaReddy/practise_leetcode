@@ -1,4 +1,4 @@
-# Leetcode solution 
+# Leetcode solutions
 This repo has solutions for leetcode questions in python and C languages.
 These are completely coded by me may not be the best solution.
 
