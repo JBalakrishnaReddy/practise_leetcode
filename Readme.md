@@ -1,7 +1,7 @@
 # Leetcode solutions
 This repo has solutions for leetcode questions in python and C languages.
-These are completely coded by me may not be the best solution.
+These are completely coded by me. It may or may not be the best solution out there.
 
-The solution is only the class with an example to use it.
+The solution provided includes the class Solution as present on Leetcode along with an example to use it.
 
 This repo doesn't contain all the solutions for leetcode problems.
