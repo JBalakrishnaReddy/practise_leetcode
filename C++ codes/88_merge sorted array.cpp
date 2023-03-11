@@ -5,7 +5,6 @@
 #include <algorithm>
 #include <ctime>
 
-
 using namespace std;
 
 class Solution {
@@ -15,7 +14,7 @@ public:
         int temp = nums2[0];
         int count = 1;
         for (int i=1; i<=nums2.size();i++)
-        { 
+        {
             if(temp == nums2[i])
             {
                 count ++;
