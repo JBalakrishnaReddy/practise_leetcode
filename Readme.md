@@ -6,5 +6,6 @@ The solution provided includes the class Solution as present on Leetcode along w
 
 This repo doesn't contain all the solutions for leetcode problems.
 
+70. climbing stairs problem         - This is completed
 88. merge sorted array              - This is completed
 1162. As fas from land as possible  - This is not completed
