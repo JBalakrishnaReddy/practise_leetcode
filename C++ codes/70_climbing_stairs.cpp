@@ -1,3 +1,6 @@
+/* The solution to this problem is completed.
+ This is kind of fibonocci sequence problem. */
+
 #include <iostream>
 #include <cstddef>
 

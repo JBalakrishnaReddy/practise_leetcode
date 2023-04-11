@@ -1,3 +1,5 @@
+/* Completed - The solution to this problem is completed. */
+
 #include <iostream>
 #include <vector>
 #include <stdbool.h>
@@ -7,10 +9,26 @@
 
 using namespace std;
 
+
+void print_vector(vector<int> & vec, string msg="")
+{
+    cout << msg;
+    for(vector<int>:: iterator i = vec.begin(); i!=vec.end();i++)
+    {
+        cout << *i << ",";
+    }
+
+    // for(int i =0; i<vec.size(); i++)
+    // {
+    //     cout << vec[i] << ",";
+    // }
+    cout << endl;
+}
+
+
 class Solution {
 public:
-    vector<int> get_same_values(vector<int> & nums2)
-    {
+    vector<int> get_same_values(vector<int> & nums2){
         int temp = nums2[0];
         int count = 1;
         for (int i=1; i<=nums2.size();i++)
@@ -28,19 +46,20 @@ public:
         return vec;
     }
 
-    void print_vector(vector<int> & vec)
-    {
+    void print_vector(vector<int> & vec, string msg=""){
         // for(vector<int>:: iterator i = vec.begin(); i!=vec.end();i++)
         // {
         //     cout << *i << ",";
         // }
+
+        cout << msg;
         for(int i =0; i<vec.size(); i++)
         {
             cout << vec[i] << ",";
         }
         cout << endl;
     }
-    
+
     void merge1(vector<int>& nums1, int m, vector<int>& nums2, int n) {
         if(n==0)
             return;
@@ -49,7 +68,7 @@ public:
             nums1.clear();
             nums1.insert(nums1.begin(), nums2.begin(), nums2.end());
             return;
-        } 
+        }
         vector<int> vec; // = get_same_values(nums2);
         int temp; // = vec[0];
         int count; // = vec[1];
@@ -77,11 +96,11 @@ public:
                 cout << "mums2: ";
                 print_vector(nums2);
             }
-            nums1.insert(nums1.end(), nums2.begin(), nums2.end());     
+            nums1.insert(nums1.end(), nums2.begin(), nums2.end());
         }
         // nums1.insert(nums2.begin(), nums2.end());
         else{
-            nums1.insert(nums1.begin()+m, nums2.begin(), nums2.end());     
+            nums1.insert(nums1.begin()+m, nums2.begin(), nums2.end());
         }
     }
 
@@ -94,7 +113,7 @@ public:
             nums1.clear();
             nums1.insert(nums1.begin(), nums2.begin(), nums2.end());
             return;
-        } 
+        }
         // vector<int> vec; // = get_same_values(nums2);
         // int temp;
         // int count;
@@ -146,7 +165,7 @@ public:
     }
 
     void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
-        // This is cleaned version of merge2 above. Just removed all the commented code 
+        // This is cleaned version of merge2 above. Just removed all the commented code
         // This code works like charm on Leetcode. Beats most of the codes written by others.
         if(n==0)
             return;
@@ -173,10 +192,10 @@ public:
                 nums1.pop_back();
                 m++;
             }
-            cout<< "nums1: ";
-            print_vector(nums1);
-            cout << "mums2: ";
-            print_vector(nums2);
+            // cout<< "nums1: ";
+            // print_vector(nums1);
+            // cout << "mums2: ";
+            // print_vector(nums2);
         }
     }
 };
@@ -189,35 +208,28 @@ int main()
     for(int i=0; i<8;i++){
         nums1.push_back(arr1[i]);
     }
-
-
-    srand(unsigned(std::time(nullptr)));
-    vector<int> v(10);
-    generate(v.begin(), v.end(), std::rand);
-    for(int i=0; i<v.size(); i++){
-        v[i] = v[i]%10000;
-        cout << v[i] << ",";
-    }
-
-    // nums1.push_back(0);
-    cout << *nums1.begin() << *nums1.end() << endl;
-    // nums1.erase(nums1.end());
-
-    // nums1.erase(nums1.begin()+m, nums1.end());
-    // blah.print_vector(nums1);
-    // return 0;
-
     vector<int> nums2;
     int arr2[] = {2,5,6,0,1};
     int n = 5;
     for(int i=0; i<n;i++){
         nums2.push_back(arr2[i]);
-    }  
-    
-    Solution blah;
+    }
+    print_vector(nums1, "sorted array 1: ");
+    print_vector(nums2, "sorted array 2: ");
+    // srand(unsigned(std::time(nullptr)));
+    // vector<int> v(10);
+    // generate(v.begin(), v.end(), std::rand);
+    // for(int i=0; i<v.size(); i++){
+    //     v[i] = v[i]%10000;
+    //     cout << v[i] << ",";
+    // }
+    // blah.print_vector(v);
 
-    // blah.merge(nums1, m, nums2, n);
-    // blah.print_vector(nums1);
-    blah.print_vector(v);
+    // cout << *nums1.begin() << *nums1.end() << endl;
+
+
+    Solution sol;
+    sol.merge(nums1, m, nums2, n);
+    sol.print_vector(nums1, "merged array: ");
     return 0;
 }
