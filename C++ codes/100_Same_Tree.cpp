@@ -14,8 +14,32 @@ struct TreeNode {
 };
 
 class Solution {
+    //Three solutions vary slightly but are functionally very similar and overhead is also same.
 public:
     bool isSameTree(TreeNode* p, TreeNode* q) {
+        if( (p == NULL && q == NULL) || (
+            (p != NULL && q != NULL) &&
+            (p->val == q->val) && 
+            isSameTree(p->left, q->left) &&
+            isSameTree(p->right, q->right)) ){ 
+            return true;
+        }
+        return false;
+    }
+
+    bool _isSameTree2(TreeNode* p, TreeNode* q) {
+        if(p == NULL && q == NULL) 
+            return true;
+        // Because of the placement of this if statement after previous if this works flawlessly 
+        // Since the above condition is checked there is no way both are NULL and it returns false despite the single condition says so.
+        if(p == NULL || q == NULL) 
+            return false;
+        if(p->val != q->val) 
+            return false;
+        return _isSameTree2(p->left,q->left) && _isSameTree2(p->right,q->right);
+    }
+
+    bool _isSameTree3(TreeNode* p, TreeNode* q) {
         bool isSame = false;
         //isSame will be true if both node values is same and its sub tree is same is same
         if(p == NULL && q == NULL){
@@ -23,8 +47,8 @@ public:
             return isSame;
         }
         if((p != NULL && q != NULL) && (p->val == q->val) && 
-            isSameTree(p->left, q->left) &&
-            isSameTree(p->right, q->right)){
+            _isSameTree3(p->left, q->left) &&
+            _isSameTree3(p->right, q->right)){
                 isSame = true;
                 return isSame;
             }
