@@ -73,7 +73,7 @@ int main(){
     initialize();
     int temp;
     temp = sol.maxProfit(pp);
-    while(t2--)    temp = sol.__maxProfit(price);  
+    while(t2--)    temp = sol.maxProfit(price);  
     // cout << "sizeof price: " << price.size() << endl;
     cout << " max profit: " << temp << endl;
     return 0;
