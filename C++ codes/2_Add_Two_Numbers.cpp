@@ -36,7 +36,8 @@ struct ListNode {
 
 void print_vector(vector<int> & vec, string msg=""){
     cout << msg;    
-    for(int &s:vec)     cout << s << ",";   cout << endl;
+    // for(int &s:vec)     cout << s << ",";   cout << endl;
+    for(int i=0; i<vec.size(); i++) cout << vec[i] << ", ";   cout << endl;
 }
 
 int listNodeToInt(ListNode* l){
