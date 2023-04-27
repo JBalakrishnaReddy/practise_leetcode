@@ -2,50 +2,33 @@
 #include <queue>
 #include <vector>
 #include <map>
+#include <math.h>
+#include <algorithm>
 
 using namespace std;
 
-// void print_vector(){
-
-// }
 void print_vector(vector<int> & vec, string msg=""){
     cout << msg;
     // for(int &s:vec)     cout << s << ",";   cout << endl;
     for(int i=0; i< vec.size(); i++) cout << vec[i] << ", ";    cout << endl;
 }
-
-class Solution1{
+class Solution {
 public:
-    int maxProfit(vector<int>& prices) {
-        int len = prices.size();
-        int _max = 0;
-        multimap<int, int> mp;
-        // priority_queue<pair<int, int> > pq; // first element is number, second is position and we will order as per number
-        // for(int i=0; i<len; i++)    pq.push(make_pair(prices[i], i));
-        // for(int i=0; i<len; i++){
-        //     cout << pq.top().first << ", " << pq.top().second << endl;
-        //     pq.pop();
-        // }
-        for(int i=0; i<len; i++)   mp.insert(pair<int, int>(prices[i], i));         // mp is sorted.
-        // for(auto &s: mp) cout << s.first << ", " << s.second << endl;
-        // for(auto it = mp.begin(); it!=mp.end(); it++){
-        //     cout << it->first << ", " << it->second << endl;
-        // }
-        for(auto it = mp.begin(); it!=mp.end(); it++){
-            for(auto jt = mp.rbegin(); jt!=mp.rend(); jt++){
-                int start_val = it->first;
-                int start_pos = it->second;
-                int end_val = jt->first;
-                int end_pos = jt->second;
-                _max = ((end_pos > start_pos) ? (end_val - start_val):0 ) > _max ? (end_val - start_val) : _max;
-            }
-        } 
-
-        return _max;
+    int maxProfit(vector<int> &prices){
+        int len = prices.size(), _maxProfit = 0, _minPriceOfStock = INT_MAX;
+        for(int i=0; i< len; i++){
+            // Some hardwares better work with min, max and few other with ternary operator.
+            // The mac m1 I am working ON has better performance on ternary operator where LC gives better performance for min, max.
+            _minPriceOfStock = prices[i] < _minPriceOfStock ? prices[i]:_minPriceOfStock;
+            _maxProfit =  (prices[i] - _minPriceOfStock) > _maxProfit ?  (prices[i] - _minPriceOfStock) : _maxProfit;
+            // _minPriceOfStock = min(prices[i], _minPriceOfStock);
+            // _maxProfit =  max((prices[i] - _minPriceOfStock), _maxProfit); 
+        }
+        return _maxProfit;
     }
 };
 
-class Solution {
+class Solution1 {
     //This solution takes good amount of time to execute while it takes relatively less memory as compared to other algorithms. As per leetcode it takes 93.3MB which is very good but time consumed is little high.
 public:
     int maxProfit(vector<int>& prices) {
@@ -83,14 +66,14 @@ void initialize(){
 
 int main(){
     Solution sol;
-    int t2 = 1e4;    //If I take 1e4 the previous algorithm gave output in 4.28s user.
-    int nums[] = {7,2,1,5,3,6,4,7 };
+    int t2 = 1e5;    //If I take 1e4 the previous algorithm gave output in 4.28s user.
+    int nums[] = {7,3,9,1,5,3,6,4,8};
     // int nums[] = {7,6,5,4,3};
     vector<int> pp(nums, nums+sizeof(nums)/sizeof(int));
     initialize();
     int temp;
     temp = sol.maxProfit(pp);
-    // while(t2--)    temp = sol.maxProfit(price);  
+    while(t2--)    temp = sol.__maxProfit(price);  
     // cout << "sizeof price: " << price.size() << endl;
     cout << " max profit: " << temp << endl;
     return 0;
