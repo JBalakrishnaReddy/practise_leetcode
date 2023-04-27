@@ -31,12 +31,10 @@ struct ListNode {
     ListNode() : val(0), next(nullptr) {}
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
-    ~ListNode(){ cout << "desto:" << endl; }
 };
 
 void print_vector(vector<int> & vec, string msg=""){
-    cout << msg;    
-    // for(int &s:vec)     cout << s << ",";   cout << endl;
+    cout << msg;
     for(int i=0; i<vec.size(); i++) cout << vec[i] << ", ";   cout << endl;
 }
 
