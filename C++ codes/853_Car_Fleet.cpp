@@ -44,6 +44,7 @@ Then, the fleet (speed 2) and the car starting at 4 (speed 1) become one fleet, 
 
 // We have to find maximum number of car fleets possible.
 
+// The solution seems good but it has time problem for many number of cars because of the sorting technique.
 #include <iostream>
 #include <cstddef>
 #include <vector>
@@ -64,46 +65,31 @@ class Solution{
 public:
     int carFleet(int target, vector<int>& position, vector<int>& speed){
 
-        vector<int> time;   // time vector of size n;
+        // vector<int> time;   // time vector of size n;
         int numOfFleets = 0;
         int numOfCars = position.size();
-        int currentFleet = 1;
         if(numOfCars == 1){
             return 1;
         }
         shortBubbleSort(position, speed);
-        // print_vector(position, "sorted position array: ");
-        // print_vector(speed, "sorted speed array: "); 
-
-        // We will get the time vector 
-        // for(int i=0; i<numOfCars; i++){
-        //     time.push_back(position[i]/speed[i]);
-        // }
-        for(int i=numOfCars-1; i>=0; i--){
+        for(int i=numOfCars-1; i>=0;i--){
+            // cout << "i: " << i << endl;
             numOfFleets += 1;
-            int time = (target-position[i])/speed[i];
-            cout << __LINE__ << " " << time << " " << position[i] << " " << speed[i] << endl;
+            float time = ((float)target-position[i])/speed[i];
+            cout << "time: " << time << endl;
+            // cout << __LINE__ << " " << time << " " << position[i] << " " << speed[i] << endl;
             for(int j=i-1; j>=0; j--){
-                i = j+1;
-                cout << __LINE__ << " " << (target-position[j])/speed[j] << " " << position[j] << " " << speed[j] << endl;
-                if((target-position[j])/speed[j] <= time){
-                    time = (target-position[j])/speed[j];
+                // cout << __LINE__ << " " << (target-position[j])/speed[j] << " " << position[j] << " " << speed[j] << endl;
+                if(((float)target-position[j])/speed[j] <= time){
+                    i = j;  // Because current car is in this grp
+                    // time = ((float)target-position[j])/speed[j];
+                    // cout << "time: " << time << endl;
                     continue;
                 }
+                i = j+1;    // Because current car is not in this group.
                 break;
             }
         }
-
-        // for(int i=numOfCars; i>0 ; i--){
-        //     numOfFleets += 1;
-        //     int time = position[i]/speed[i];
-        //     for(int j=i-1; j<numOfCars; j--){
-        //         i=j+1;
-        //         if(position[j]/speed[j] != time)
-        //             break;
-        //         continue;
-        //     }
-        // }
         return numOfFleets;
     }
 private:
@@ -141,8 +127,9 @@ private:
 };
 
 int main(){
-    // int target = 12, pos[] = {10,8,0,5,3}, spd[] = {2,4,1,1,3};
-    int target = 100, pos[] = {0,2,4}, spd[] = {4,2,1};
+    int target = 12, pos[] = {10,8,0,5,3}, spd[] = {2,4,1,1,3};
+    // int target = 100, pos[] = {0,2,4}, spd[] = {4,2,1};
+    // int target = 10, pos[] = {6,8}, spd[] = {3,2};
     vector<int> position, speed;
     for(int i=0; i<sizeof(pos)/sizeof(int); i++)
         position.push_back(pos[i]);
@@ -153,7 +140,8 @@ int main(){
     // sol.shortBubbleSort(position, speed);
     // print_vector(position, "sorted position array: ");
     // print_vector(speed, "sorted speed array: ");
-    cout << "number of Fleets: " << sol.carFleet(target, position, speed);
+    cout << "number of Fleets: " << sol.carFleet(target, position, speed) << endl;
     // cout << "maximum number of car fleets: " << sol.carFleet(target, position, speed) << endl;
     return 0;
 }
+

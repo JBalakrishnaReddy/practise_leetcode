@@ -33,6 +33,7 @@ void print_vector(vector<int> & vec, string msg=""){
 }
 
 class Solution1 {
+    // My very first solution but not so efficient.
 public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
         int len = nums.size();
@@ -106,6 +107,8 @@ public:
 };
 
 class Solution3 {
+    // maxSlidingWindow_dq uses deque 
+    // maxSlidingWindow_pq uses priority queues. Both are good.
 public:
     vector<int> maxSlidingWindow(vector<int> &nums, int k){
         int len = nums.size();
@@ -221,7 +224,8 @@ public:
     }
 };
 
-class Solution {
+
+class Solution4 {
 public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
         deque<int> dq;
@@ -236,6 +240,28 @@ public:
         }
         return ans;
     }
+};
+
+class Solution{
+    //This is the best solution I came up with.
+    public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        int len = nums.size();
+        deque<int> dq;
+        vector<int> ans;
+        ans.reserve(len-k);
+        for(int i=0; i< len; i++){
+            if((!dq.empty()) && dq[0] <= i-k)  dq.pop_front();
+            while(!dq.empty() && (nums[dq.back()] < nums[i])) {
+                dq.pop_back();
+            }
+            dq.push_back(i);
+            
+            if(i >= k-1) ans.push_back(nums[dq[0]]);
+        }
+        return ans;
+    }
+
 };
 
 vector<int> initialize(){
@@ -254,7 +280,7 @@ int main(int argc, char** argv) {
     vector<int> vec;
     int k;
     int temp = 1;
-    cout << argc << endl;
+    // cout << argc << endl;
     if(argc>1)
     {    if (!strcmp(argv[1], "0")){
             vec = initialize();
@@ -278,13 +304,13 @@ int main(int argc, char** argv) {
         }
     }
     else{
-        cout << __LINE__ << endl;
+        // cout << __LINE__ << endl;
         int nums[]= {8, 5, 10, 7, 9, 4, 15, 12, 90, 13};
         k = 4;
         vec.assign(nums, nums+sizeof(nums)/sizeof(int));
     }
     
-    Solution2 sol;
+    Solution sol;
     vector<int> slidingVec;
     while(temp--)
         slidingVec = sol.maxSlidingWindow(vec, k);
