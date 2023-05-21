@@ -9,12 +9,7 @@ public:
         
         //Swap extreme rows and then do the transpose to get what we want
         int len = matrix.size();
-        // len = len-1;
-        for(int i=0; i < --len; i++){
-            matrix[i].swap(matrix[len]);
-        }
-
-
+        reverse(matrix.begin(), matrix.end());
         // for (auto i: matrix){
         //     for(auto j:i){
         //         cout << j << ", ";
@@ -22,12 +17,9 @@ public:
         //     cout << endl;
         // }
 
-        for(int i=0; i< matrix.size(); i++){
-            // matrix2[i].resize(matrix[i].size());
-            for (int j=i+1; j<matrix[i].size(); j++){
-                int temp = matrix[j][i];
-                matrix[j][i] = matrix[i][j];
-                matrix[i][j] = temp;
+        for(int i=0; i< len; i++){
+            for (int j=i+1; j<len; j++){
+                swap(matrix[j][i], matrix[i][j]);
             }
         }
 
