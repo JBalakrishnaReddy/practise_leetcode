@@ -7,12 +7,12 @@
 
 using namespace std;
 
-class Solution {
+class Solution1 {
     // This solution has to be worked recursively with minimum no. of days at each stage using trees concept.
     vector<int> minDaysPC;
     unordered_map <int,int> mp;
 public:
-    Solution(){
+    Solution1(){
         minDaysPC.resize(12);
         minDaysPC[0] = 0; minDaysPC[1] = 1; minDaysPC[2] = 2; minDaysPC[3] = 2;
         minDaysPC[4] = 3; minDaysPC[5] = 4; minDaysPC[6] = 3; minDaysPC[7] = 4;
@@ -57,6 +57,20 @@ public:
     }
 };
 
+
+class Solution{
+    // This is the best grabbed from Leetcode solutions itself
+public:
+    unordered_map<int, int> dp;
+
+    int minDays(int n) {
+        if (n <= 1)
+            return n;
+        if (dp.count(n) == 0)
+            dp[n] = 1 + min(n % 2 + minDays(n / 2), n % 3 + minDays(n / 3));
+        return dp[n];
+    }
+};
 
 int main(int argc, char* argv[]){
     Solution sol;
