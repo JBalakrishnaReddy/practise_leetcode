@@ -8,7 +8,6 @@ horizontally or vertically. You may assume all four edges of the grid are all su
 #include <string>
 #include <queue>
 
-
 using namespace std;
 
 class Solution {
