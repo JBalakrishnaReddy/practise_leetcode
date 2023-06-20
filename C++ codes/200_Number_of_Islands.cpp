@@ -7,10 +7,12 @@ horizontally or vertically. You may assume all four edges of the grid are all su
 #include <vector>
 #include <string>
 #include <queue>
+#include <set>
+#include <list>
 
 using namespace std;
 
-class Solution {
+class Solution1 {
 public:
     int numIslands(vector<vector<char>>& grid) {
         int islands = 0;
@@ -21,38 +23,79 @@ public:
 
         for(int i=0; i< rows; i++){
             for(int j=0; j<columns; j++){
-                if(grid[i][j] == '1' && vis[i][j] == false){
+                if(vis[i][j] == false && grid[i][j] == '1'){
                     islands++;  // If we entered this means there is an island so increment it.
-                    this->addNeighbours(q, i, j, rows, columns);
-                    // cout << i << j << endl;
-                    this->bfs(grid, vis, q, i, j, rows, columns);
+                    // while there are non zero neighbours continue it.
+                    int row, column;
+                    q.push({i,j});
+                    while(!q.empty()){
+                        pair<int, int> e = q.front();
+                        q.pop();
+                        row = e.first;
+                        column = e.second;
+                        if(vis[row][column] == false && grid[row][column] == '1'){
+                        // if(grid[row][column] == '1'){
+                            vis[row][column] = true;
+                            this->addNeighbours(vis, q, row, column, rows, columns);
+                            // if(row-1>=0)    q.push({row-1, column});
+                            // if(row+1 < rows)    q.push({row+1, column});
+                            // if(column-1>=0)    q.push({row, column-1});
+                            // if(column+1 < columns)    q.push({row, column+1});
+                        }
+                    }
                 }
             }
         }
         return islands;
     }
 
-    void addNeighbours(queue<pair<int, int>> &q, int row, int column, int rows, int columns){
-        if(row-1>=0)    q.push({row-1, column});
-        if(row+1 < rows)    q.push({row+1, column});
-        if(column-1>=0)    q.push({row, column-1});
-        if(column+1 < columns)    q.push({row, column+1});
+    void addNeighbours(vector<vector<bool>> &vis, queue<pair<int, int>> &q, int row, int column, int rows, int columns){
+        if(row-1>=0 && vis[row-1][column] == false)    q.push({row-1, column});
+        if(row+1 < rows && vis[row+1][column] == false)    q.push({row+1, column});
+        if(column-1>=0 && vis[row][column-1] == false)    q.push({row, column-1});
+        if(column+1 < columns && vis[row][column+1] == false)    q.push({row, column+1});
+
+        // if(row-1>=0)    q.push({row-1, column});
+        // if(row+1 < rows)    q.push({row+1, column});
+        // if(column-1>=0)    q.push({row, column-1});
+        // if(column+1 < columns)    q.push({row, column+1});
     }
 
-    void bfs(vector<vector<char>>& grid, vector<vector<bool>>& vis, queue<pair<int, int>> &q, int row, int column, int rows, int columns){
-        vis[row][column] = true;
-        // while there are non zero neighbours continue it.
-        while(!q.empty()){
-            pair<int, int> e = q.front();
-            q.pop();
-            row = e.first;
-            column = e.second;
-            if(grid[row][column] == '1' && vis[row][column] == false){
-                vis[row][column] = true;
-                this->addNeighbours(q, row, column, rows, columns);
-                // this->bfs(grid, vis, q, row, column, rows, columns);
+};
+
+class Solution {
+    // Credits to https://leetcode.com/problems/number-of-islands/solutions/3028461/c-easy-solution-beats-91-dfs-approach/
+public:
+    bool isValid(int i,int j,int n,int m,vector<vector<char>>& grid){
+        if(i>=0 && j>=0 && i<n && j<m && grid[i][j]=='1')
+            return true;
+        return false;
+    }
+    void dfs(int i,int j,int n,int m,vector<vector<char>>& grid){
+        grid[i][j]='0';
+        if(isValid(i-1,j,n,m,grid))
+            dfs(i-1,j,n,m,grid);
+        if(isValid(i+1,j,n,m,grid))
+            dfs(i+1,j,n,m,grid);
+        if(isValid(i,j-1,n,m,grid))
+            dfs(i,j-1,n,m,grid);
+        if(isValid(i,j+1,n,m,grid))
+            dfs(i,j+1,n,m,grid);
+
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+        int ans=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]=='1'){
+                    ans++;
+                    dfs(i,j,n,m,grid);
+                }
             }
         }
+        return ans;
     }
 };
 
