@@ -22,12 +22,12 @@ public:
                 profit and also initialize minPrice and maxPrice to 
                 current price and go to step 2. If we cannot book profits
                 then go to next step.
-            4. Check if current Price is less than minPrice, 
+            3. Check if current Price is less than minPrice, 
                 if yes then update the current min as well as
                 maxPrice also to current price(this is done so that maxPrice 
                 is not from previous history of prices) , else go to next step.
-            5. If the number is more than maxPrice then update only maxPrice 
-            6. Once the loop ends if there can be min and maxPrice that step 
+            4. If the number is more than maxPrice then update only maxPrice 
+            5. Once the loop ends if there can be min and maxPrice that step 
                 was unable to capture that can be captured now and update to overall profit.
         */
         int len = prices.size();
@@ -37,7 +37,7 @@ public:
         int profit = 0;
         for(int i=1; i< len; i++){
             if((prices[i]+fee <= maxPrice) && (maxPrice - minPrice - fee > 0)) {
-                //Here the next transaction starts
+                //Book profit here and start next transaction.
                 profit += maxPrice - minPrice - fee;
                 // cout << maxPrice << ", " << minPrice << "," << profit << endl;
                 minPrice = maxPrice =prices[i];
@@ -65,7 +65,7 @@ int main(){
     // int fee = 2;
     // vector<int>prices{1,3,7,5,10,3};
     // int fee = 3;
-    vector<int>prices{10, 9, 8, 7, 2, 0};       // output = 0
+    vector<int>prices{10, 9, 8, 7, 2, 1};       // output = 0
     int fee = 3;
     // vector<int> prices{4,5,2,4,3,3,1,2,5,4};    // output = 4
     // int fee = 1;
