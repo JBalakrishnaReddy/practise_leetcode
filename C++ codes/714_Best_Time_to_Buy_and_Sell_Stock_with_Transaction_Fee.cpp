@@ -59,6 +59,21 @@ public:
     }
 };
 
+class Solution_LC {
+public:
+    int maxProfit(vector<int>& prices, int fee) {
+        int buy = INT_MIN;
+        int sell = 0;
+
+        for (int price : prices) {
+            buy = max(buy, sell - price);
+            sell = max(sell, buy + price - fee);
+        }
+
+        return sell;
+    }
+};
+
 int main(){
     // vector<int>prices{1,3,2,8,4,9};
     // vector<int>prices{1,3,2,8,4,9,3,7,5,10,3};  //output=13
