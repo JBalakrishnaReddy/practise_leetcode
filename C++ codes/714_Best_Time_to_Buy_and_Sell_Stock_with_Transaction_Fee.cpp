@@ -63,29 +63,30 @@ class Solution_LC {
 public:
     int maxProfit(vector<int>& prices, int fee) {
         int buy = INT_MIN;
-        int sell = 0;
+        int profit = 0;
 
         for (int price : prices) {
-            buy = max(buy, sell - price);
-            sell = max(sell, buy + price - fee);
+            buy = max(buy, profit - price);
+            profit = max(profit, buy + price - fee);
+            cout << price << ": " << buy << ": " << profit << endl;
         }
 
-        return sell;
+        return profit;
     }
 };
 
 int main(){
     // vector<int>prices{1,3,2,8,4,9};
-    // vector<int>prices{1,3,2,8,4,9,3,7,5,10,3};  //output=13
-    // int fee = 2;
+    vector<int>prices{1,3,2,8,4,9,3,7,5,10,3};  //output=13
+    int fee = 2;
     // vector<int>prices{1,3,7,5,10,3};
     // int fee = 3;
-    vector<int>prices{10, 9, 8, 7, 2, 1};       // output = 0
-    int fee = 3;
+    // vector<int>prices{10, 9, 8, 7, 2, 1};       // output = 0
+    // int fee = 3;
     // vector<int> prices{4,5,2,4,3,3,1,2,5,4};    // output = 4
     // int fee = 1;
 
-    Solution sol;
+    Solution_LC sol;
     int temp = sol.maxProfit(prices, fee);
     cout << temp << endl;
 
